@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #b9f67b;
+  }
+
+  .stopwatch-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+
+  .timer {
+    font-size: 60px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button {
+    padding: 10px 20px;
+    margin: 0 5px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background-color: #033c06;
+  }
+</style>
+</head>
+<body>
+
+<div class="stopwatch-container">
+  <div class="timer" id="display">00:00:00</div>
+  <div class="buttons">
+    <button class="button" onclick="start()">Start</button>
+    <button class="button" onclick="stop()">Stop</button>
+    <button class="button" onclick="reset()">Reset</button>
+  </div>
+</div>
+
+<script>
+  let milliseconds = 0;
+  let timer;
+
+  function displayTime() {
+    let hours = Math.floor(milliseconds / 3600000);
+    let minutes = Math.floor((milliseconds % 3600000) / 60000);
+    let seconds = Math.floor((milliseconds % 60000) / 1000);
+
+    hours = (hours < 10) ? "0" + hours : hours;
+    minutes = (minutes < 10) ? "0" + minutes : minutes;
+    seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+    document.getElementById('display').innerHTML = hours + ':' + minutes + ':' + seconds;
+  }
+
+  function start() {
+    if (!timer) {
+      timer = setInterval(function() {
+        milliseconds += 1000;
+        displayTime();
+      }, 1000);
+    }
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = false;
+  }
+
+  function reset() {
+    clearInterval(timer);
+    timer = false;
+    milliseconds = 0;
+    displayTime();
+  }
+</script>
+
+</body>
+</html>
